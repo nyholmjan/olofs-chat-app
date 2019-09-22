@@ -1,0 +1,8 @@
+.App {
+  display: grid;
+  grid-template-columns: 160px auto;
+}
+
+.chat-wrapper {
+  height: 100%;
+}
