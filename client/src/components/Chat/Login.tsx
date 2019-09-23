@@ -1,7 +1,7 @@
-import React, {useState} from "react";
+import React, {useState} from 'react';
 import {useDispatch} from "react-redux";
-import {Button, TextField} from "@material-ui/core";
-import {changeUser} from "../../store/actions";
+import {Button, TextField} from '@material-ui/core';
+import {changeUser} from '../../store/actions';
 import './Login.css'
 
 const Login: React.FC = () => {
@@ -11,10 +11,10 @@ const Login: React.FC = () => {
 
   return (
     <form className="login-form">
-      Choose nickname:
-      <TextField onChange={(e) => setUser(e.target.value)} value={user}/>
-      <Button type='submit' onClick={(evt) => {
-        evt.preventDefault();
+      <span className="nickname-label">Choose nickname:</span>
+      <TextField onChange={event => setUser(event.target.value)} value={user}/>
+      <Button type='submit' onClick={event => {
+        event.preventDefault();
         dispatch(changeUser({user: user}));
         setUser('');
       }}>

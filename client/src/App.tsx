@@ -4,8 +4,8 @@ import MessageList from './components/Chat/MessageList'
 import ChannelSelector from './components/Chat/ChannelSelector'
 import MessageInput from './components/Chat/MessageInput'
 import Login from './components/Chat/Login'
-import {subscribeMessages} from "./store/actions";
-import {AppState} from "./store";
+import {subscribeMessages} from './store/actions';
+import {AppState} from './store';
 import './App.css';
 
 const App: React.FC = () => {
@@ -22,13 +22,15 @@ const App: React.FC = () => {
       <ChannelSelector/>
       <div>
         <div className="chat-wrapper">
-          {user.user === 'anonymous' && (<Login/>)}
-          {user.user !== 'anonymous' && (
-            <>
-              <MessageList/>
-              <MessageInput user={user.user}/>
-            </>
-          )}
+          {user.user === 'anonymous' ? (
+              <Login/>
+            ) :
+            (
+              <>
+                <MessageList/>
+                <MessageInput user={user.user}/>
+              </>
+            )}
         </div>
       </div>
     </div>

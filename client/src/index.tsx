@@ -5,7 +5,7 @@ import {Provider} from 'react-redux'
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import {socketMiddleware} from "./store/middleware/socketMiddleware";
+import {socketMiddleware} from './store/middleware/socketMiddleware';
 import {rootReducer} from "./store";
 
 const store = createStore(rootReducer, applyMiddleware(socketMiddleware()));

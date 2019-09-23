@@ -16,7 +16,7 @@ export interface Message {
 
 export interface ChatState {
   channels: string[]
-  channelMessages: { [channelname: string]: Array<Message> }
+  channelMessages: {[channelname: string]: Array<Message>}
 }
 
 export interface SystemState {

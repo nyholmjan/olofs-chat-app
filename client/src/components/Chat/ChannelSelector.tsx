@@ -1,8 +1,8 @@
-import React from "react";
-import {useDispatch, useSelector} from "react-redux";
+import React from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import {Tabs, Tab} from '@material-ui/core'
-import {AppState} from "../../store";
-import {changeChannel} from "../../store/actions";
+import {AppState} from '../../store';
+import {changeChannel} from '../../store/actions';
 import './ChannelSelector.css'
 
 const ChannelSelector: React.FC = () => {
@@ -22,7 +22,7 @@ const ChannelSelector: React.FC = () => {
         <>
           <h4>Channels</h4>
           <Tabs orientation="vertical" value={currentChannel} onChange={setChannel}>
-            {channels.map((channel) => {
+            {channels.map(channel => {
               return (
                 <Tab label={'#' + channel} value={channel} className="channel-button"/>
               )

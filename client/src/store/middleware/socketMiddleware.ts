@@ -1,9 +1,9 @@
 import io from 'socket.io-client';
-import {ChatActionTypes, Message, SystemActionTypes} from "../types";
-import {Dispatch, MiddlewareAPI} from "redux";
+import {Dispatch, MiddlewareAPI} from 'redux';
+import {ChatActionTypes, Message, SystemActionTypes} from '../types';
 
 export const socketMiddleware = () => {
-  const socket = io(':8000');
+  const socket = io();
 
   return ({dispatch}: MiddlewareAPI) => (next: Dispatch) => (action: ChatActionTypes | SystemActionTypes) => {
     if (typeof action === 'function') {
@@ -25,6 +25,7 @@ export const socketMiddleware = () => {
     if (leave) {
       socket.removeListener(event);
     }
+
     if (event === 'SEND_MESSAGE') {
       return socket.emit('message', payload)
     }

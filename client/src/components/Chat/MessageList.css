@@ -6,4 +6,10 @@
     align-items: flex-start;
     justify-content: flex-end;
     color: white;
+    max-width: 100%;
+}
+
+.message-row {
+    max-width: 100%;
+    overflow-wrap: break-word;
 }

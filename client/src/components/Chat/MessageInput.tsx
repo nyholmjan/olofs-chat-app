@@ -19,7 +19,7 @@ const MessageInput: React.FC<User> = (user: User) => {
 
   return (
     <form onSubmit={submitMessage}>
-      <TextField fullWidth placeholder={'send messages'} onChange={(e) => setMessage(e.target.value)} value={message}/>
+      <TextField fullWidth placeholder={'send messages'} onChange={event => setMessage(event.target.value)} value={message}/>
     </form>
   );
 };

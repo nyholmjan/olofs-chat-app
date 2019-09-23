@@ -14,13 +14,16 @@ app.get('/', (req, res) => {
 const server = http.createServer(app);
 const io = socketIo(server);
 
-const history: Array<string> = [];
+const history: string[] = [];
 
 io.on('connection', (socket: any) => {
   for (let message of history) {
     socket.emit('message', message)
   }
   socket.on('message', (message: string) => {
+    if (history.length > 199) {
+      history.splice(199, history.length - 199)
+    }
     history.push(message);
     io.emit('message', message);
     console.log('received: %s', JSON.stringify(message));
