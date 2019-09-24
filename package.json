@@ -8,9 +8,8 @@
   "private": false,
   "scripts": {
     "start": "tsc && node ./dist/server/server.js",
-    "serve": "tsc && cd client && yarn && yarn build",
-    "start-nodemon": "nodemon",
-    "build": "tsc"
+    "build": "tsc && cd client && yarn && yarn build",
+    "start-nodemon": "nodemon"
   },
   "dependencies": {
     "express": "^4.17.1",
