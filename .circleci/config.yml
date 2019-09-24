@@ -41,12 +41,12 @@ jobs:
       - run:
           name: Archive Docker Image
           command: |
-            docker save -o ~/olofs-chat-app/image.tar $HEROKU_APP_NAME:latest
+            docker save -o ~/olofs-chat-app/docker/image.tar $HEROKU_APP_NAME:latest
       - save_cache:
           name: Saving Docker Image To Cache
           key: v1_docker-{{ .Environment.CIRCLE_SHA1 }}
           paths:
-            - ~/olofs-chat-app
+            - ~/olofs-chat-app/docker
 
   deploy_docker_image:
     working_directory:
@@ -54,6 +54,14 @@ jobs:
     docker:
       - image: wingrunr21/alpine-heroku-cli:latest
     steps:
+      - run:
+          name: Install ca-certificates
+          command: |
+            apk update && apk add --no-cache ca-certificates && update-ca-certificates
+      - run:
+          name: Install docker
+          command: |
+            apk add docker
       - restore_cache:
           name: Restoring Docker Image From Cache
           key: v1_docker-{{ .Environment.CIRCLE_SHA1 }}
@@ -61,13 +69,13 @@ jobs:
       - run:
           name: Load Docker Image
           command: |
-            docker load -i ~/olofs-chat-app/image.tar
+            docker load -i ~/olofs-chat-app/docker/image.tar
       - run:
           name: Tag Docker Image
           command: |
             docker tag \
               $HEROKU_APP_NAME:latest \
-              registry.heroku.com/$HEROKU_APP_NAME/worker
+              registry.heroku.com/$HEROKU_APP_NAME/web
       - run:
           name: Login to Heroku's Docker Registry
           command: |
@@ -75,11 +83,11 @@ jobs:
       - run:
           name: Push Image to Heroku's Docker Registry
           command: |
-            docker push registry.heroku.com/$HEROKU_APP_NAME/worker
+            docker push registry.heroku.com/$HEROKU_APP_NAME/web
       - run:
           name: Release Docker Image
           command: |
-            heroku container:release -a $HEROKU_APP_NAME worker
+            heroku container:release -a $HEROKU_APP_NAME web
 workflows:
   version: 2
   build:
