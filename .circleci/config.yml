@@ -1,0 +1,93 @@
+version: 2.1
+
+orbs:
+  heroku: circleci/heroku@0.0.8
+
+jobs:
+  checkout_code:
+    working_directory: ~/olofs-chat-app
+    docker:
+      - image: buildpack-deps:latest
+    steps:
+      - checkout
+      - save_cache:
+          name: Saving Git Repository To Cache
+          key: v1_repo-{{ .Environment.CIRCLE_SHA1 }}
+          paths:
+            - ~/olofs-chat-app
+
+  build_docker_image:
+    working_directory:
+      ~/olofs-chat-app
+    docker:
+      - image: docker:latest
+    steps:
+      - restore_cache:
+          name: Restoring Git Repository From Cache
+          key: v1_repo-{{ .Environment.CIRCLE_SHA1 }}
+      - setup_remote_docker
+      - run:
+          name: Build Docker Image
+          command: |
+            docker build \
+              --rm \
+              -t $HEROKU_APP_NAME:latest \
+              -f Dockerfile \
+              .
+      - run:
+          name: Initialize Cache Directory For Docker Image
+          command: |
+            mkdir ~/olofs-chat-app/docker
+      - run:
+          name: Archive Docker Image
+          command: |
+            docker save -o ~/olofs-chat-app/image.tar $HEROKU_APP_NAME:latest
+      - save_cache:
+          name: Saving Docker Image To Cache
+          key: v1_docker-{{ .Environment.CIRCLE_SHA1 }}
+          paths:
+            - ~/olofs-chat-app
+
+  deploy_docker_image:
+    working_directory:
+      ~/olofs-chat-app
+    docker:
+      - image: wingrunr21/alpine-heroku-cli:latest
+    steps:
+      - restore_cache:
+          name: Restoring Docker Image From Cache
+          key: v1_docker-{{ .Environment.CIRCLE_SHA1 }}
+      - setup_remote_docker
+      - run:
+          name: Load Docker Image
+          command: |
+            docker load -i ~/olofs-chat-app/image.tar
+      - run:
+          name: Tag Docker Image
+          command: |
+            docker tag \
+              $HEROKU_APP_NAME:latest \
+              registry.heroku.com/$HEROKU_APP_NAME/worker
+      - run:
+          name: Login to Heroku's Docker Registry
+          command: |
+            echo $HEROKU_API_KEY | docker login -u $HEROKU_USERNAME --password-stdin registry.heroku.com
+      - run:
+          name: Push Image to Heroku's Docker Registry
+          command: |
+            docker push registry.heroku.com/$HEROKU_APP_NAME/worker
+      - run:
+          name: Release Docker Image
+          command: |
+            heroku container:release -a $HEROKU_APP_NAME worker
+workflows:
+  version: 2
+  build:
+    jobs:
+      - checkout_code
+      - build_docker_image:
+          requires:
+            - checkout_code
+      - deploy_docker_image:
+          requires:
+            - build_docker_image
