@@ -3,7 +3,7 @@ import {Dispatch, MiddlewareAPI} from 'redux';
 import {ChatActionTypes, Message, SystemActionTypes} from '../types';
 
 export const socketMiddleware = () => {
-  const socket = io();
+  const socket = io(process.env.NODE_ENV === 'development' ? ':8000' : '');
 
   return ({dispatch}: MiddlewareAPI) => (next: Dispatch) => (action: ChatActionTypes | SystemActionTypes) => {
     if (typeof action === 'function') {

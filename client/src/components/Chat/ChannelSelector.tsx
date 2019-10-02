@@ -24,7 +24,7 @@ const ChannelSelector: React.FC = () => {
           <Tabs orientation="vertical" value={currentChannel} onChange={setChannel}>
             {channels.map(channel => {
               return (
-                <Tab label={'#' + channel} value={channel} className="channel-button"/>
+                <Tab key={channel} label={'#' + channel} value={channel} className="channel-button"/>
               )
             })}
           </Tabs>

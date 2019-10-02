@@ -22,7 +22,7 @@ io.on('connection', (socket: any) => {
   }
   socket.on('message', (message: string) => {
     if (history.length > 199) {
-      history.splice(199, history.length - 199)
+      history.splice(0, 1)
     }
     history.push(message);
     io.emit('message', message);

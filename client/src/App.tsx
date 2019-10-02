@@ -12,28 +12,25 @@ const App: React.FC = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(subscribeMessages());
-    // eslint-disable-next-line
   }, []);
 
   const user = useSelector((state: AppState) => state.system.user);
 
   return (
     <div className="App">
-      <ChannelSelector/>
-      <div>
-        <div className="chat-wrapper">
-          {user.user === 'anonymous' ? (
-              <Login/>
-            ) :
-            (
-              <>
+        {user.user === 'anonymous' ? (
+            <Login/>
+          ) :
+          (
+            <div className="chat-wrapper">
+              <ChannelSelector/>
+              <div className="channel-wrapper">
                 <MessageList/>
                 <MessageInput user={user.user}/>
-              </>
-            )}
-        </div>
+              </div>
+            </div>
+          )}
       </div>
-    </div>
   );
 };
 

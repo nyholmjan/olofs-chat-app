@@ -2,11 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {applyMiddleware, createStore} from 'redux'
 import {Provider} from 'react-redux'
-import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import {socketMiddleware} from './store/middleware/socketMiddleware';
 import {rootReducer} from "./store";
+import './index.css';
 
 const store = createStore(rootReducer, applyMiddleware(socketMiddleware()));
 

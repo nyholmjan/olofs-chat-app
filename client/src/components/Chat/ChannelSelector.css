@@ -1,13 +1,4 @@
 .channel-selector {
-  height: 100vh;
   flex-direction: column;
   text-align: center;
-}
-
-.channel-button {
-  display: flex;
-  background-color: darkcyan;
-  height: 3em;
-  align-items: center;
-  cursor: pointer;
 }
