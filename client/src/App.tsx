@@ -18,7 +18,7 @@ const App: React.FC = () => {
 
   return (
     <div className="App">
-        {user.user === 'anonymous' ? (
+        {user.userName === 'anonymous' ? (
             <Login/>
           ) :
           (
@@ -26,7 +26,7 @@ const App: React.FC = () => {
               <ChannelSelector/>
               <div className="channel-wrapper">
                 <MessageList/>
-                <MessageInput user={user.user}/>
+                <MessageInput user={user}/>
               </div>
             </div>
           )}

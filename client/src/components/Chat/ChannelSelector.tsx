@@ -18,7 +18,7 @@ const ChannelSelector: React.FC = () => {
 
   return (
     <nav className={'channel-selector'}>
-      {user.user !== 'anonymous' && (
+      {user.userName !== 'anonymous' && (
         <>
           <h4>Channels</h4>
           <Tabs orientation="vertical" value={currentChannel} onChange={setChannel}>

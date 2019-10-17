@@ -3,12 +3,10 @@ export const RECEIVE_MESSAGE = 'RECEIVE_MESSAGE';
 export const SET_USER = 'SET_USER';
 export const SET_CHANNEL = 'SET_CHANNEL';
 
-export interface User {
-  user: string
-}
+export interface User { userName: string }
 
 export interface Message {
-  user: User
+  userName: string
   timestamp: Date
   message: string
   channel: string

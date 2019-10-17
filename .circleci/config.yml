@@ -32,21 +32,21 @@ jobs:
             docker build \
               --rm \
               -t $HEROKU_APP_NAME:latest \
-              -f Dockerfile \
+              -f docker/app/Dockerfile \
               .
       - run:
           name: Initialize Cache Directory For Docker Image
           command: |
-            mkdir ~/olofs-chat-app/docker
+            mkdir ~/olofs-chat-app/dockerfile
       - run:
           name: Archive Docker Image
           command: |
-            docker save -o ~/olofs-chat-app/docker/image.tar $HEROKU_APP_NAME:latest
+            docker save -o ~/olofs-chat-app/dockerfile/image.tar $HEROKU_APP_NAME:latest
       - save_cache:
           name: Saving Docker Image To Cache
           key: v1_docker-{{ .Environment.CIRCLE_SHA1 }}
           paths:
-            - ~/olofs-chat-app/docker
+            - ~/olofs-chat-app/dockerfile
 
   deploy_docker_image:
     working_directory:
@@ -69,7 +69,7 @@ jobs:
       - run:
           name: Load Docker Image
           command: |
-            docker load -i ~/olofs-chat-app/docker/image.tar
+            docker load -i ~/olofs-chat-app/dockerfile/image.tar
       - run:
           name: Tag Docker Image
           command: |

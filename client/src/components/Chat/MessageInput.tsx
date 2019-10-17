@@ -6,14 +6,16 @@ import {AppState} from "../../store";
 import {User} from "../../store/types";
 import './Login.css'
 
-const MessageInput: React.FC<User> = (user: User) => {
+type MessageInputProps = { user: User }
+
+const MessageInput: React.FC<MessageInputProps> = ({user}) => {
   const dispatch = useDispatch();
   const [message, setMessage] = useState<string>('');
   const currentChannel = useSelector((state: AppState) => state.system.currentChannel);
 
   const submitMessage = (evt: React.FormEvent) => {
     evt.preventDefault();
-    dispatch(sendMessage({timestamp: new Date(), message: message.substr(0, 160), user, channel: currentChannel}));
+    dispatch(sendMessage({timestamp: new Date(), message: message.substr(0, 160), userName: user.userName, channel: currentChannel}));
     setMessage('');
   };
 
@@ -25,4 +27,3 @@ const MessageInput: React.FC<User> = (user: User) => {
 };
 
 export default MessageInput
-
