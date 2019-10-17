@@ -26,9 +26,9 @@ const MessageList: React.FC = () => {
       <div className="list-wrapper">
         {messages && messages.map((message: Message) => {
           return (
-            <div className="message-row" key={`${message.user + message.timestamp.toString()}`}>
+            <div className="message-row" key={`${message.userName + message.timestamp.toString()}`}>
               {`${getTimestampString(message.timestamp)} - `}
-              <b>{message.user.user}: </b>
+              <b>{message.userName}: </b>
               {message.message}
             </div>)
         })}

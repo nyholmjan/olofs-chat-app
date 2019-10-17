@@ -32,7 +32,7 @@ jobs:
             docker build \
               --rm \
               -t $HEROKU_APP_NAME:latest \
-              -f Dockerfile \
+              -f /docker/app/Dockerfile \
               .
       - run:
           name: Initialize Cache Directory For Docker Image

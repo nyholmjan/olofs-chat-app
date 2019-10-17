@@ -12,7 +12,7 @@ const initialChatState: ChatState = {
   channels: ['general', 'catpeople', 'dogpeople'],
   channelMessages: {general: [], catpeople: [], dogpeople: []}
 };
-const initialSystemState: SystemState = {user: {user: 'anonymous'}, currentChannel: 'general'};
+const initialSystemState: SystemState = {user: {userName: 'anonymous'}, currentChannel: 'general'};
 
 export const chatReducer = (state = initialChatState, action: ChatActionTypes): ChatState => {
   switch (action.type) {
@@ -36,7 +36,7 @@ export const systemReducer = (
     case SET_USER: {
       return {
         ...state,
-        user: {user: action.payload.user}
+        user: { userName: action.payload.userName }
       }
     }
     case SET_CHANNEL: {

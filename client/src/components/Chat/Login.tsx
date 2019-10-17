@@ -7,16 +7,16 @@ import './Login.css'
 const Login: React.FC = () => {
   const dispatch = useDispatch();
 
-  const [user, setUser] = useState<string>('');
+  const [userName, setUserName] = useState<string>('');
 
   return (
     <form className="login-form">
       <span className="nickname-label">Choose nickname:</span>
-      <TextField onChange={event => setUser(event.target.value)} value={user}/>
+      <TextField onChange={event => setUserName(event.target.value)} value={userName}/>
       <Button type='submit' onClick={event => {
         event.preventDefault();
-        dispatch(changeUser({user: user}));
-        setUser('');
+        dispatch(changeUser({userName: userName}));
+        setUserName('');
       }}>
         Send
       </Button>
